@@ -3,7 +3,7 @@
     "containerDefinitions": [
         {
             "name": "hello-world",
-            "image": "654654288964.dkr.ecr.ap-south-1.amazonaws.com/demo-deploy:fff2d144150448841bdcfdce54bdda9921d120bb/hello-world-node:latest",
+            "image": "654654288964.dkr.ecr.ap-south-1.amazonaws.com/demo-deploy:latest",
             "cpu": 0,
             "portMappings": [
                 {
