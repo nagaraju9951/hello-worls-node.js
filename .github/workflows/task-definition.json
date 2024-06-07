@@ -2,7 +2,7 @@
     "taskDefinitionArn": "arn:aws:ecs:ap-south-1:654654288964:task-definition/hello-world-task:7",
     "containerDefinitions": [
         {
-            "name": "hello-world",
+            "name": "hello-world-task",
             "image": "654654288964.dkr.ecr.ap-south-1.amazonaws.com/demo-deploy:latest",
             "cpu": 0,
             "portMappings": [
