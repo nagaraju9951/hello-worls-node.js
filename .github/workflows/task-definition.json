@@ -3,7 +3,7 @@
     "containerDefinitions": [
         {
             "name": "hello-world",
-            "image": "your_dockerhub_username/hello-world-node:latest",
+            "image": "nagarajusatyala/hello-world-node:latest",
             "cpu": 0,
             "portMappings": [
                 {
