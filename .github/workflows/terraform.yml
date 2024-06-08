@@ -1,0 +1,51 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run tests
+        run: npm test
+
+      - name: Build Docker image
+        run: docker build -t hello-world .
+
+      - name: Log in to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+
+      - name: Push Docker image to Amazon ECR
+        run: |
+          REPOSITORY_URI=$(aws ecr describe-repositories --repository-name hello-world --query 'repositories[0].repositoryUri' --output text)
+          docker tag hello-world:latest $REPOSITORY_URI:latest
+          docker push $REPOSITORY_URI:latest
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-west-2
+
+      - name: Deploy with Terraform
+        run: |
+          cd terraform
+          terraform init
+          terraform apply -auto-approve
