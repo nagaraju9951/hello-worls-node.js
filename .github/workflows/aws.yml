@@ -81,13 +81,21 @@ jobs:
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
         echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_ENV
 
-    - name: Fill in the new image ID in the Amazon ECS task definition
-      id: task-def
-      uses: aws-actions/amazon-ecs-render-task-definition@v1
+    #- name: Fill in the new image ID in the Amazon ECS task definition
+    #  id: task-def
+     # uses: aws-actions/amazon-ecs-render-task-definition@v1
+      #with:
+       # task-definition: ${{ env.ECS_TASK_DEFINITION }}
+        #container-name: ${{ env.CONTAINER_NAME }}
+        #image: ${{ steps.build-image.outputs.image }}
+
+    - name: Deploy Amazon ECS task definition
+      uses: aws-actions/amazon-ecs-deploy-task-definition@v1
       with:
-        task-definition: ${{ env.ECS_TASK_DEFINITION }}
-        container-name: ${{ env.CONTAINER_NAME }}
-        image: ${{ steps.build-image.outputs.image }}
+        task-definition: ${{ steps.cgafrica-new-backend-task.outputs.task-definition }}
+        service: cgafrica-backend-service
+        cluster: cgafrica-backend-cluster
+        wait-for-service-stability: true
     - name: Deploy Amazon ECS task definition
       uses: aws-actions/amazon-ecs-deploy-task-definition@v1
       with:
