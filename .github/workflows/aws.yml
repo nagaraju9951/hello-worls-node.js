@@ -62,7 +62,14 @@ jobs:
       id: login-ecr
       uses: aws-actions/amazon-ecr-login@v1
 
+    - name: Check if image exists in Amazon ECR
+      id: check-image
+      run: |
+        aws ecr describe-images --repository-name $ECR_REPOSITORY --image-ids imageTag=${{ github.sha }} --region $AWS_REGION || exit 0
+        exit 1
+
     - name: Build, tag, and push image to Amazon ECR
+      if: ${{ steps.check-image.outputs.ExitCode == '1' }}
       id: build-image
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
@@ -88,4 +95,3 @@ jobs:
         service: ${{ env.ECS_SERVICE }}
         cluster: ${{ env.ECS_CLUSTER }}
         wait-for-service-stability: true
-
