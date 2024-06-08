@@ -3,7 +3,7 @@
     "containerDefinitions": [
         {
             "name": "hello-world-task",
-            //"image": "654654288964.dkr.ecr.ap-south-1.amazonaws.com/demo-deploy:latest",
+            "image": "654654288964.dkr.ecr.ap-south-1.amazonaws.com/demo-deploy:latest",
             "cpu": 0,
             "portMappings": [
                 {
