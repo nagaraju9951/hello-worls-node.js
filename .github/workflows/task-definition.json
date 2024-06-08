@@ -20,7 +20,7 @@
         }
     ],
     "networkMode": "awsvpc",
-    "executionRoleArn": "arn:aws:iam::654654288964:role/ecsTaskExecutionRole",  // Replace with your actual role ARN
+    "executionRoleArn": "arn:aws:iam::654654288964:user/Nagaraju/ecsTaskExecutionRole",  // Replace with your actual role ARN
     "requiresCompatibilities": [
         "FARGATE"
     ],
