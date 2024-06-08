@@ -1,7 +1,13 @@
+
 provider "aws" {
   region = "ap-south-1"  # Change to your desired region
 }
 
+# Define an AWS S3 bucket resource
+resource "aws_s3_bucket" "example_bucket" {
+  bucket = "mk-1-tk-1nh"  # Change to your desired bucket name
+  acl    = "private"
+}
 # VPC
 resource "aws_vpc" "vpc" {
   cidr_block = "10.1.0.0/16"
